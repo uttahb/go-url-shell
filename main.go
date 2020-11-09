@@ -8,6 +8,7 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+    fmt.Println("in handler.....")
     cmd := exec.Command("/bin/sh", "./start.sh")
     stdoutStderr, err := cmd.CombinedOutput()
 	if err != nil {
