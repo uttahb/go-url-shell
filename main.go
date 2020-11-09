@@ -15,6 +15,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	fmt.Printf("%s\n", stdoutStderr) 
+    fmt.Fprintf(w, "hello\n")
 }
 
 func main() {
