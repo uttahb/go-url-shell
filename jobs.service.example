@@ -1,0 +1,10 @@
+Description= instance to serve jobs api
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/home/<put where to execute the binary here>
+ExecStart=/home/<put binary path here>
+[Install]
+WantedBy=multi-user.target
