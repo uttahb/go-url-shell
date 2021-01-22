@@ -11,7 +11,9 @@ import (
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("in handler.....")
 	repo := r.URL.Query().Get("repo")
-
+	r.ParseForm()
+	payload := r.Form["payload"]
+	fmt.Println(payload)
 	if repo != "" {
 		// ... process it, will be the first (only) if multiple were given
 		// note: if they pass in like ?param1=&param2= param1 will also be "" :|
