@@ -21,20 +21,24 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	payload := json.Unmarshal([]byte(r.Form["payload"][0]), &newr)
 	fmt.Println(payload)
 	fmt.Println(newr)
+	if newr.Ref == "refs/heads/development" {
+		fmt.Println("push to dev branch came, starting deploy")
+		if repo != "" {
+			// ... process it, will be the first (only) if multiple were given
+			// note: if they pass in like ?param1=&param2= param1 will also be "" :|
+			file := "./start.sh"
+			cmd := exec.Command("/bin/sh", file, repo)
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stdout
+			if err := cmd.Run(); err != nil {
+				fmt.Println("Error:", err)
+				fmt.Fprintf(w, "err")
+			}
 
-	if repo != "" {
-		// ... process it, will be the first (only) if multiple were given
-		// note: if they pass in like ?param1=&param2= param1 will also be "" :|
-		file := "./start.sh"
-		cmd := exec.Command("/bin/sh", file, repo)
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stdout
-		if err := cmd.Run(); err != nil {
-			fmt.Println("Error:", err)
-			fmt.Fprintf(w, "err")
+			fmt.Fprintf(w, "Done\n")
 		}
-
-		fmt.Fprintf(w, "Done\n")
+	} else {
+		fmt.Println("This is not the dev branch ", newr.Ref)
 	}
 	// run command
 
