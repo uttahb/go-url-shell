@@ -10,16 +10,17 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	type Request struct {
+	type Req struct {
 		Ref string `json:"ref"`
 	}
 	fmt.Println("in handler.....")
 	repo := r.URL.Query().Get("repo")
 	r.ParseForm()
-
-	var newr = Request{}
+	var newr = Req{}
+	fmt.Println(r.Form["payload"][0])
 	payload := json.Unmarshal([]byte(r.Form["payload"][0]), &newr)
 	fmt.Println(payload)
+	fmt.Println(newr)
 
 	if repo != "" {
 		// ... process it, will be the first (only) if multiple were given
