@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,11 +10,17 @@ import (
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	type Request struct {
+		Ref string `json:"ref"`
+	}
 	fmt.Println("in handler.....")
 	repo := r.URL.Query().Get("repo")
 	r.ParseForm()
-	payload := r.Form["payload"]
+
+	var newr = Request{}
+	payload := json.Unmarshal([]byte(r.Form["payload"][0]), &newr)
 	fmt.Println(payload)
+
 	if repo != "" {
 		// ... process it, will be the first (only) if multiple were given
 		// note: if they pass in like ?param1=&param2= param1 will also be "" :|
