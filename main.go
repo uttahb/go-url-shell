@@ -27,7 +27,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			// ... process it, will be the first (only) if multiple were given
 			// note: if they pass in like ?param1=&param2= param1 will also be "" :|
 			file := "./start.sh"
-			cmd := exec.Command("/bin/sh", file, repo)
+			cmd := exec.Command("/bin/bash", file, repo)
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stdout
 			if err := cmd.Run(); err != nil {
