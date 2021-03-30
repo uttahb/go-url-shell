@@ -21,7 +21,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	payload := json.Unmarshal([]byte(r.Form["payload"][0]), &newr)
 	fmt.Println(payload)
 	fmt.Println(newr)
-	if newr.Ref == "refs/heads/development" {
+	if newr.Ref == "refs/heads/master" {
 		fmt.Println("push to dev branch came, starting deploy")
 		if repo != "" {
 			// ... process it, will be the first (only) if multiple were given
